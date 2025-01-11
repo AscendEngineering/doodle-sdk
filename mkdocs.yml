@@ -1,0 +1,13 @@
+site_name: Doodle SDK
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings
+
+nav:
+  - Home: index.md
+  - Guide: guide.md
+  - API Reference:
+    - Module: doodle-sdk/main.md
