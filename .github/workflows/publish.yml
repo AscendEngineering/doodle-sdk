@@ -2,7 +2,7 @@ name: Publish Python Package
 
 on:
   push:
-    tags:
+    branches:
       - main  # Trigger only on version tags
 
 jobs:
