@@ -8,6 +8,5 @@ plugins:
 
 nav:
   - Home: index.md
-  - Guide: guide.md
   - API Reference:
-    - Module: doodle-sdk/main.md
+    - Main: doodle-sdk/main.md

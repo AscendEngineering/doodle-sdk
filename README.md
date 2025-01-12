@@ -1,5 +1,13 @@
 # doodle-sdk
 
+# Docs
+
+Run the MkDocs development server to view your documentation:
+
+``` bash
+mkdocs serve
+```
+
 
 # Legal
 This project is not currently licensed for public or commercial use. Please contact me if you are interested in obtaining a license.
