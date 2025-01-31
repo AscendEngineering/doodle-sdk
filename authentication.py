@@ -17,3 +17,7 @@ if __name__ == '__main__':
     doodle3_connected = doodle3.connect()
     print(doodle3_connected)
 
+    doodle4 = Doodle()
+    print(doodle4.connect())
+    
+

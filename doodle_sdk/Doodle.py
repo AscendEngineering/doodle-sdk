@@ -8,6 +8,20 @@ from typing import Dict
 class Doodle:
 
     def __init__(self, ip: str = None, user: str = None, password: str = None):
+        """Creates an instance of the Doodle class
+
+        Args:
+            ip: IP address of the Doodle
+            user: username of the Doodle
+            password: password of the Doodle
+
+        Returns:
+            Instance of Doodle class
+
+        Raises:
+            None
+        """
+        
         self._ip = ip
         self._user = user
         self._password = password
@@ -19,11 +33,24 @@ class Doodle:
         self._session = requests.Session()
 
     def connect(self, ip: str = None, user: str = None, password: str = None) -> bool:
+        """Connects to the Doodle and attempts to get the rpc session token
+
+        Args:
+            ip: IP address of the Doodle (required to connect)
+            user: username of the Doodle
+            password: password of the Doodle
+
+        Returns:
+            True if connection is successful, False if not
+
+        Raises:
+            TypeError: If the IP address of the Doodle was never set
+        """
 
         if ip: 
             self._ip = ip
         elif (not self._ip):
-            raise NameError("Must set an IP address before connecting")
+            raise TypeError("Must set an IP address before connecting")
 
         self._url = f'https://{self._ip}/ubus'
 
@@ -66,11 +93,3 @@ class Doodle:
         }
         
         return login_payload
-
-
-        
-        
-
-
-
-            
