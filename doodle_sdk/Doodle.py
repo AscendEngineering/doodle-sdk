@@ -69,7 +69,7 @@ class Doodle:
 
         login_payload = self._gen_login_payload(self._user, self._password)
 
-        for attempt in range(5):
+        for attempt in range(5): # Attempts to connect to the Doodle 5 times
             try:
                 response = self._session.post(self._url, json=login_payload, verify=False)
                 data = response.json()
