@@ -71,7 +71,7 @@ class Doodle:
 
         for attempt in range(5): # Attempts to connect to the Doodle 5 times
             try:
-                response = self._session.post(self._url, json=login_payload, verify=False)
+                response = self._session.post(self._url, json=login_payload, verify=False, timeout=1)
                 data = response.json()
 
                 # Extract the token
@@ -79,7 +79,6 @@ class Doodle:
                 return True
             except:
                 pass
-            time.sleep(0.5)
 
         return False
 
