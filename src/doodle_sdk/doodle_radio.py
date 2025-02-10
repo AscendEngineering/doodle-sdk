@@ -4,6 +4,7 @@ import re
 import warnings
 import time
 from typing import Dict
+from . import stats
 
 class Doodle:
 
@@ -81,6 +82,30 @@ class Doodle:
                 pass
 
         return False
+
+    def get_associated_list(self):
+        if not self._token or not self._url:
+            raise TypeError("Must connect to the Doodle before requesting its associated stations")
+
+        assoclist_payload = self._gen_assoclist_payload(self._token)
+        response = self._session.post(self._url, json=assoclist_payload, verify=False, timeout=1)
+        stats_response = stats.translate_stat_response(response.json())
+        
+        return stats_response
+
+    def _gen_assoclist_payload(self, token: str):
+
+        assoclist_payload = {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "call",
+            "params": [token, "iwinfo", "assoclist", {
+                "device": "wlan0"
+            }]
+        }
+
+        return assoclist_payload
+
 
     def _gen_login_payload(self, user: str, password: str) -> Dict[str, str]:
 
