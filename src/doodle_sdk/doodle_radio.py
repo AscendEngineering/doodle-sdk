@@ -5,6 +5,7 @@ import warnings
 import time
 from typing import Dict
 from . import stats
+from . import settings
 
 class Doodle:
 
@@ -28,6 +29,11 @@ class Doodle:
         self._password = password
         self._url = None
         self._token = None
+
+        # Radio Settings
+        self._channel = None
+        self._frequency = None
+        self._channel_width = None
 
         # Disable warnings for self-signed certificates
         requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
@@ -93,6 +99,26 @@ class Doodle:
         
         return stats_response
 
+    def get_channel_frequency_width(self):
+        if not self._token or not self._url:
+            raise TypeError("Must connect to the Doodle before requesting its associated stations")
+
+        channel_frequency_payload = self._gen_channel_frequency_payload(self._token)
+        response = self._session.post(self._url, json=channel_frequency_payload, verify=False, timeout=1)
+        self.channel, self.frequency, self.channel_width = settings.translate_channel_frequency_response(response.json())
+
+        return self.channel, self.frequency, self.channel_width
+
+    def _gen_channel_frequency_payload(self, token: str):
+
+        channel_frequency_payload = {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "call",
+            "params": [token, "file", "exec", {"command": "iw", "params": ["wlan0", "info"]}]
+        }
+        return channel_frequency_payload
+
     def _gen_assoclist_payload(self, token: str):
 
         assoclist_payload = {
@@ -105,7 +131,6 @@ class Doodle:
         }
 
         return assoclist_payload
-
 
     def _gen_login_payload(self, user: str, password: str) -> Dict[str, str]:
 
