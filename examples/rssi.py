@@ -5,7 +5,7 @@ import time
 if __name__ == '__main__':
 
     # Connect to radio
-    doodle1 = Doodle(ip="10.223.108.26", user="root", password="DoodleSmartRadio")
+    doodle1 = Doodle(ip="10.223.97.204", user="root", password="DoodleSmartRadio")
     doodle1_connected = doodle1.connect()
     print(doodle1_connected) 
 
