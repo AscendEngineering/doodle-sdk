@@ -21,10 +21,14 @@ jobs:
     - name: Install Dependencies
       run: pip install mkdocs mkdocs-material mkdocstrings[python]
 
+    - name: Install doodle_sdk
+          run: |
+            pip install --upgrade pip
+            pip install --no-cache-dir mkdocs mkdocs-material mkdocstrings[python]
+            pip install -e .
+
     - name: Build Documentation
-      run: |
-        export PYTHONPATH=$(pwd)
-        mkdocs gh-deploy --force
+      run: mkdocs gh-deploy --force
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4  
