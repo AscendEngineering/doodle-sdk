@@ -24,3 +24,31 @@ Installing the pip package run:
 ```bash
 pip3 install .
 ```
+
+# Manually building the package
+To manually build the package, follow these steps:
+
+1. Ensure you have all the necessary dependencies installed:
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+
+2. Clean any previous builds:
+    ```bash
+    ./clean.sh
+    ```
+
+3. Build the package:
+    ```bash
+    python3 setup.py sdist bdist_wheel
+    ```
+
+4. Verify the package:
+    ```bash
+    twine check dist/*
+    ```
+
+5. Optionally, upload the package to PyPI:
+    ```bash
+    twine upload dist/*
+    ```
