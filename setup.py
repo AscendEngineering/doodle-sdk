@@ -8,9 +8,10 @@ setup(
     long_description_content_type="text/markdown",
     author="Andrew Wilkins",
     author_email="andrew.wilkins@ascendengineer.com",
-    url="https://github.com/afwilkin/doodle-sdk",
+    url="https://github.com/AscendEngineering/doodle-sdk.git",
     license="",
-    packages=find_packages(),
+    package_dir={'': 'src'},
+    packages=find_packages(where='src'),
     install_requires=[
         "requests>=2.0.0",  # Add your dependencies here
     ],
