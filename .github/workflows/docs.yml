@@ -3,7 +3,7 @@ name: Deploy Documentation
 on:
   push:
     branches:
-      - main  # Trigger the workflow on pushes to the main branch
+      - docs  # Trigger the workflow on pushes to the docs branch
 
 jobs:
   deploy:
