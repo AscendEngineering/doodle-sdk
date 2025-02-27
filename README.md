@@ -2,13 +2,14 @@
 
 # Docs
 
-Run the MkDocs development server to view your documentation:
+Run the MkDocs development server to view your documentation locally:
 
 ``` bash
 pip3 install requirements.txt
 mkdocs serve
 ```
 
+Merge "main" branch into "docs" branch to update documentation to main
 
 # Legal
 This project is not currently licensed for public or commercial use. Please contact me if you are interested in obtaining a license.

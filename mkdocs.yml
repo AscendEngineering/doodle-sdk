@@ -10,5 +10,3 @@ nav:
   - Home: index.md
   - API Reference:
     - doodle_radio: doodle_sdk/doodle_radio.md
-    - settings: doodle_sdk/settings.md
-    - stats: doodle_sdk/stats.md

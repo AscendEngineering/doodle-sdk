@@ -90,6 +90,14 @@ class Doodle:
         return False
 
     def get_associated_list(self):
+        """Retrieves the list of associated stations from the Doodle.
+    
+        Returns:
+            dict: A dictionary containing the translated response from the Doodle of associated stations.
+        Raises:
+            TypeError: If the Doodle is not connected (missing token or URL).
+            requests.exceptions.RequestException: If there is an issue with the HTTP request.
+        """
         if not self._token or not self._url:
             raise TypeError("Must connect to the Doodle before requesting its associated stations")
 
@@ -100,6 +108,14 @@ class Doodle:
         return stats_response
 
     def get_channel_frequency_width(self):
+        """Retrieves the channel, frequency, and channel width from the Doodle device.
+
+        Raises:
+            TypeError: If the device is not connected (i.e., `_token` or `_url` is not set).
+
+        Returns:
+            tuple: A tuple containing the channel, frequency, and channel width.
+        """
         if not self._token or not self._url:
             raise TypeError("Must connect to the Doodle before requesting its associated stations")
 

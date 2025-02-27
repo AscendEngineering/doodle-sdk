@@ -3,7 +3,7 @@ name: Deploy Documentation
 on:
   push:
     branches:
-      - main  # Trigger the workflow on pushes to the main branch
+      - docs  # Trigger the workflow on pushes to the docs branch
 
 jobs:
   deploy:
@@ -20,6 +20,12 @@ jobs:
 
     - name: Install Dependencies
       run: pip install mkdocs mkdocs-material mkdocstrings[python]
+
+    - name: Install doodle_sdk
+      run: |
+        pip install --upgrade pip
+        pip install --no-cache-dir mkdocs mkdocs-material mkdocstrings[python]
+        pip install -e .
 
     - name: Build Documentation
       run: mkdocs gh-deploy --force
