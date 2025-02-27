@@ -22,7 +22,9 @@ jobs:
       run: pip install mkdocs mkdocs-material mkdocstrings[python]
 
     - name: Build Documentation
-      run: mkdocs gh-deploy --force
+      run: |
+        export PYTHONPATH=$(pwd)
+        mkdocs gh-deploy --force
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4  
