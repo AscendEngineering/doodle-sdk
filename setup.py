@@ -2,15 +2,16 @@ from setuptools import setup, find_packages
 
 setup(
     name="doodle-sdk",  # Replace with your package name
-    version="0.1.0",
+    version="0.1.1",
     description="SDK for better interfacing of Doodle Labs Radio",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     author="Andrew Wilkins",
     author_email="andrew.wilkins@ascendengineer.com",
-    url="https://github.com/afwilkin/doodle-sdk",
+    url="https://github.com/AscendEngineering/doodle-sdk.git",
     license="",
-    packages=find_packages(),
+    package_dir={'': 'src'},
+    packages=find_packages(where='src'),
     install_requires=[
         "requests>=2.0.0",  # Add your dependencies here
     ],
