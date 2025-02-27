@@ -22,10 +22,10 @@ jobs:
       run: pip install mkdocs mkdocs-material mkdocstrings[python]
 
     - name: Install doodle_sdk
-          run: |
-            pip install --upgrade pip
-            pip install --no-cache-dir mkdocs mkdocs-material mkdocstrings[python]
-            pip install -e .
+      run: |
+        pip install --upgrade pip
+        pip install --no-cache-dir mkdocs mkdocs-material mkdocstrings[python]
+        pip install -e .
 
     - name: Build Documentation
       run: mkdocs gh-deploy --force
