@@ -5,6 +5,7 @@
 Run the MkDocs development server to view your documentation:
 
 ``` bash
+pip3 install requirements.txt
 mkdocs serve
 ```
 
