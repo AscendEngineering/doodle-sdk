@@ -13,9 +13,6 @@ if __name__ == '__main__':
     start_time = time.time()
     while (True):
         associated_list = doodle1.get_associated_list()
-        print(associated_list)
         for station in associated_list:
             print(f"{station.mac}: noise {station.noise}, signal {station.signal}")
         time.sleep(1)
-        print("time ", time.time() - start_time)
-    # print(associated_list)

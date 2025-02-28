@@ -18,6 +18,5 @@ if __name__ == '__main__':
     print(doodle3_connected)
 
     doodle4 = Doodle()
-    # print(doodle4.connect())
     
 
