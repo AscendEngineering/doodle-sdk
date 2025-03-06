@@ -37,8 +37,9 @@ class Doodle:
         self._channel_width = None
         self._submodel = None
         self._parent_model = None
-        self._availible_models = None
-        self._availible_frequencies = None
+        self._available_models = None
+        self._available_frequencies = None
+        self._firmware_version = None
 
         # Disable warnings for self-signed certificates
         requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
@@ -88,12 +89,27 @@ class Doodle:
 
                 # Extract the token
                 self._token = data['result'][1]['ubus_rpc_session']
+
+                # Pull neccessary information from radio
+                print("attempt",attempt)
+                self.refresh_info()
                 return True
-            except:
+            except Exception as e:
+                print(e)
                 pass
 
         return False
-        
+
+    # pulls all information that we need from the radio    
+    def refresh_info(self):
+        self._pull_firmware_version()
+        self._pull_parent_submodel()
+        self._pull_frequency()
+        self._pull_channel_info()
+        self._pull_available_submodels()
+        self._pull_available_frequencies()
+        self._pull_available_channels()
+        self._pull_available_channel_widths()
 
     def get_associated_list(self):
         self.check_token()
@@ -108,80 +124,48 @@ class Doodle:
         
         return stats_response
 
-    def get_channel_info(self):
+    def get_firmware_version(self):
+        return self._firmware_version
 
-        self.check_token()
-
-        channel_frequency_payload = self._send_command_payload(self._token, "iw", ["wlan0", "info"])
-        
-        response = self._session.post(self._url, json=channel_frequency_payload, verify=False, timeout=1)
-        
-        if response.status_code != 200:
-            response = self._retry(response, channel_frequency_payload, 10)
-        
-        if response.status_code != 200:
-            return None
-
-        self._channel, self._channel_width = settings.translate_channel_frequency_response(response.json())
-        return self._channel, self._channel_width
+    def get_parent_submodel(self):
+        return self._parent_model
 
     def get_frequency(self):
-
-        self.check_token()
-
-        fes_model_payload = self._send_command_payload(self._token, "fes_model.sh", ["get"])
-        
-        response = self._session.post(self._url, json=fes_model_payload, verify=False)
-        data = response.json()
-
-        # Process the result
-        if 'result' in data and len(data['result']) > 1:
-            stdout = data['result'][1].get('stdout', '')
-            output = stdout.strip()
-        else:
-            print("No result found or error in execution")
-
-        self._submodel = output
-
-        pattern = r'^[^-]*-(\d+)(?:[v\.]|$|-)'
-        match = re.match(pattern, output)
-        self._frequency = int(match.group(1)) if match else 0
-
         return self._frequency
 
-    def get_firmware_version(self):
-        self.check_token()
+    def get_channel_info(self):
+        return self._channel, self._channel_width
 
-        board_info_payload = self._gen_board_info_payload(self._token)
+    def get_channel(self):
+        return self._channel
+    
+    def get_channel_width(self):
+        return self._channel_width
 
-        response = self._session.post(self._url, json=board_info_payload, verify=False)
-        data = response.json()
+    def get_available_submodels(self):
+        return self._available_models
 
-        if 'result' in data and len(data['result']) > 1:
-            board_info = data['result'][1]
-            firmware_version = board_info['release']['version']
-            return firmware_version
-        else:
-            print("No result found or error in execution")
+    def get_avialable_frequencies(self):
+        return self._available_frequencies
 
-        return None
+    def get_available_channels(self):
+        return self._pull_available_channels
+
+    def get_available_channel_widths(self):
+        return self._pull_available_channel_widths
 
     def set_frequency(self, frequency: int):
 
         self.check_token()
 
-        self.get_availible_submodels()
-        self.get_availible_frequencies()
-        self.get_channel_info()
-
         target_submodel = ''
-        for sub in self._availible_models:
+        for sub in self._available_models:
             if (str(frequency) in sub):
                 target_submodel = sub
                 break
         
         if (target_submodel == ''):
-            raise Exception(f'Frequency not in list of availible submodels {self._availible_frequencies}')
+            raise Exception(f'Frequency not in list of available submodels {self._available_frequencies}')
 
         band_switching_payload = self._send_command_payload(self._token, "/usr/share/simpleconfig/band_switching.sh", 
                                     [target_submodel, str(self._channel), str(self._channel_width)])
@@ -190,6 +174,9 @@ class Doodle:
 
         if response.status_code != 200:
             response = self._retry(response, band_switching_payload, 10)
+
+        #refresh radio info
+        self.refresh_info()
         
         return True if response.status_code != 200 else False
 
@@ -197,13 +184,13 @@ class Doodle:
 
         self.check_token()
 
-        self.get_availible_channels()
-        if (ch not in self._availible_channels):
-            raise Exception(f"Channel {ch} not in list of availible channels: {self._availible_channels}")
+        self._pull_available_channels()
+        if (ch not in self._available_channels):
+            raise Exception(f"Channel {ch} not in list of available channels: {self._available_channels}")
 
 
-        self.get_channel_info()
-        self.get_frequency()
+        self._pull_channel_info()
+        self._pull_frequency()
 
         band_switching_payload = self._send_command_payload(self._token, "/usr/share/simpleconfig/band_switching.sh", 
                                     [self._submodel, str(ch), str(self._channel_width)])
@@ -212,41 +199,22 @@ class Doodle:
 
         if response.status_code != 200:
             response = self._retry(response, band_switching_payload, 10)
+
+        #refresh radio info
+        self.refresh_info()
         
         return True if response.status_code != 200 else False
-
-    def get_availible_channels(self):
-        
-        self.check_token()
-
-        freqlist_payload = self._gen_freqlist_payload(self._token)
-
-        response = self._session.post(self._url, json=freqlist_payload, verify=False, timeout=10)
-
-        if response.status_code != 200:
-            response = self._retry(response, band_switching_payload, 10)
-
-        data = response.json()
-
-        if 'result' in data and len(data['result']) > 1:        
-            results = data['result'][1].get('results', -1)
-        else:
-            print("No result found or error in execution")
-
-        self._availible_channels = [ch_info.get('channel') for ch_info in results]
-
-        return self._availible_channels
 
     def set_channel_width(self, channel_width: int):
 
         self.check_token()
-        self.get_availible_channel_widths()
+        self._pull_available_channel_widths()
 
-        if channel_width not in self._availible_bw:
-            raise Exception(f"Bandwidth {channel_width} not in list of availible channel bandwidths: {self._availible_bw}")
+        if channel_width not in self._available_bw:
+            raise Exception(f"Bandwidth {channel_width} not in list of available channel bandwidths: {self._available_bw}")
 
-        self.get_channel_info()
-        self.get_frequency()
+        self._pull_channel_info()
+        self._pull_frequency()
 
         band_switching_payload = self._send_command_payload(self._token, "/usr/share/simpleconfig/band_switching.sh", 
                                     [self._submodel, str(self._channel), str(channel_width)])
@@ -255,91 +223,11 @@ class Doodle:
 
         if response.status_code != 200:
             response = self._retry(response, band_switching_payload, 10)
+
+        #refresh radio info
+        self.refresh_info()
         
         return True if response.status_code != 200 else False
-
-    def get_availible_channel_widths(self):
-
-        self.check_token()
-        self.get_frequency()
-
-        channel_widths_payload = self._send_command_payload(self._token, "/usr/sbin/info.sh", [])
-
-        response = self._session.post(self._url, json=channel_widths_payload, verify=False, timeout=10)
-        
-        if response.status_code != 200:
-            response = self._retry(response, channel_widths_payload, 10)
-
-        data = response.json()
-
-        if 'result' in data and len(data['result']) > 1:   
-            models = json.loads(data['result'][1]['stdout'])['models']
-        else:
-            print("No result found or error in execution")
-
-        for model in models:
-            if model.get('model', '') == self._submodel:
-                self._availible_bw = [(int(bw) / 1000) for bw in model['chanbw_list'].split(' ')]
-
-        return self._availible_bw
-
-    def get_parent_submodel(self):
-        self.check_token()
-
-        get_parent_payload = self._send_command_payload(self._token, "fes_model.sh", ["get", "parent"])
-
-        response = self._session.post(self._url, json=get_parent_payload, verify=False, timeout=10)
-
-        if response.status_code != 200:
-            response = self._retry(response, get_parent_payload, 10)
-
-        data = response.json()
-
-        if 'result' in data and len(data['result']) > 1:        
-            stdout = data['result'][1].get('stdout', '')
-            output = stdout.strip()
-        else:
-            print("No result found or error in execution")
-
-        self._parent_model = stdout
-        return self._parent_model
-
-    def get_availible_submodels(self):
-        self.check_token()
-
-        self.get_parent_submodel()
-
-        cat_submodel_payload = self._send_command_payload(self._token, "cat", [f"/usr/share/.doodlelabs/fes/{self._parent_model}"])
-        
-        response = self._session.post(self._url, json=cat_submodel_payload, verify=False, timeout=10)
-
-        if response.status_code != 200:
-            response = self._retry(response, cat_submodel_payload, 10)
-
-        data = response.json()
-
-        if 'result' in data and len(data['result']) > 1:        
-            stdout = data['result'][1].get('stdout', '')
-            output = stdout.strip()
-        else:
-            print("No result found or error in execution")
-
-        pattern = r'sub_model\d+="([^"]+)"'
-        self._availible_models = re.findall(pattern, stdout)
-
-        return self._availible_models
-
-    def get_availible_frequencies(self):
-
-        pattern = r'^[^-]*-(\d+)(?:[v\.]|$|-)'
-        
-        self._availible_frequencies = []
-
-        for model in self._availible_models:
-            match = re.match(pattern, model)
-            self._availible_frequencies.append(int(match.group(1)) if match else 0)
-
-        return self._availible_frequencies
 
     def check_token(self):
         if not self._token or not self._url:
@@ -357,6 +245,153 @@ class Doodle:
 
         return response
 
+    def _pull_parent_submodel(self):
+        self.check_token()
+
+        get_parent_payload = self._send_command_payload(self._token, "fes_model.sh", ["get", "parent"])
+
+        response = self._session.post(self._url, json=get_parent_payload, verify=False, timeout=10)
+
+        if response.status_code != 200:
+            response = self._retry(response, get_parent_payload, 10)
+
+        data = response.json()
+        print("data",data)
+        if 'result' in data and len(data['result']) > 1:        
+            stdout = data['result'][1].get('stdout', '')
+            output = stdout.strip()
+        else:
+            print("No parent submodule found or error in execution")
+            return None
+
+        self._parent_model = stdout
+    
+    def _pull_available_channels(self):
+        
+        self.check_token()
+
+        freqlist_payload = self._gen_freqlist_payload(self._token)
+
+        response = self._session.post(self._url, json=freqlist_payload, verify=False, timeout=10)
+
+        if response.status_code != 200:
+            response = self._retry(response, band_switching_payload, 10)
+
+        data = response.json()
+
+        if 'result' in data and len(data['result']) > 1:        
+            results = data['result'][1].get('results', -1)
+        else:
+            print("No channels found or error in execution")
+
+        self._available_channels = [ch_info.get('channel') for ch_info in results]
+    
+    def _pull_available_channel_widths(self):
+
+        self.check_token()
+        self._pull_frequency()
+
+        channel_widths_payload = self._send_command_payload(self._token, "/usr/sbin/info.sh", [])
+
+        response = self._session.post(self._url, json=channel_widths_payload, verify=False, timeout=10)
+        
+        if response.status_code != 200:
+            response = self._retry(response, channel_widths_payload, 10)
+
+        data = response.json()
+
+        if 'result' in data and len(data['result']) > 1:   
+            models = json.loads(data['result'][1]['stdout'])['models']
+        else:
+            print("No channel width found or error in execution")
+
+        for model in models:
+            if model.get('model', '') == self._submodel:
+                self._available_bw = [(int(bw) / 1000) for bw in model['chanbw_list'].split(' ')]
+    
+    def _pull_available_submodels(self):
+        self.check_token()
+
+        cat_submodel_payload = self._send_command_payload(self._token, "cat", [f"/usr/share/.doodlelabs/fes/{self._parent_model}"])
+        
+        response = self._session.post(self._url, json=cat_submodel_payload, verify=False, timeout=10)
+
+        if response.status_code != 200:
+            response = self._retry(response, cat_submodel_payload, 10)
+
+        data = response.json()
+
+        if 'result' in data and len(data['result']) > 1:        
+            stdout = data['result'][1].get('stdout', '')
+            output = stdout.strip()
+        else:
+            print("No submodel found or error in execution")
+
+        pattern = r'sub_model\d+="([^"]+)"'
+        self._available_models = re.findall(pattern, stdout)
+    
+    def _pull_available_frequencies(self):
+
+        pattern = r'^[^-]*-(\d+)(?:[v\.]|$|-)'
+        
+        self._available_frequencies = []
+
+        for model in self._available_models:
+            match = re.match(pattern, model)
+            self._available_frequencies.append(int(match.group(1)) if match else 0)
+
+    def _pull_channel_info(self):
+
+        self.check_token()
+
+        channel_frequency_payload = self._send_command_payload(self._token, "iw", ["wlan0", "info"])
+        
+        response = self._session.post(self._url, json=channel_frequency_payload, verify=False, timeout=1)
+        
+        if response.status_code != 200:
+            response = self._retry(response, channel_frequency_payload, 10)
+        
+        if response.status_code != 200:
+            return None
+
+        self._channel, self._channel_width = settings.translate_channel_frequency_response(response.json())
+
+    def _pull_frequency(self):
+
+        self.check_token()
+
+        fes_model_payload = self._send_command_payload(self._token, "fes_model.sh", ["get"])
+        
+        response = self._session.post(self._url, json=fes_model_payload, verify=False)
+        data = response.json()
+
+        # Process the result
+        if 'result' in data and len(data['result']) > 1:
+            stdout = data['result'][1].get('stdout', '')
+            output = stdout.strip()
+        else:
+            print("No frequency found or error in execution")
+
+        self._submodel = output
+
+        pattern = r'^[^-]*-(\d+)(?:[v\.]|$|-)'
+        match = re.match(pattern, output)
+        self._frequency = int(match.group(1)) if match else 0
+
+    def _pull_firmware_version(self):
+        self.check_token()
+
+        board_info_payload = self._gen_board_info_payload(self._token)
+
+        response = self._session.post(self._url, json=board_info_payload, verify=False)
+        data = response.json()
+
+        if 'result' in data and len(data['result']) > 1:
+            board_info = data['result'][1]
+            firmware_version = board_info['release']['version']
+            self._firmware_version = firmware_version
+        else:
+            print("No firmware version found or error in execution")
 
     def _gen_assoclist_payload(self, token: str):
 
