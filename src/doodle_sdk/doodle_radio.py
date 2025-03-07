@@ -149,7 +149,7 @@ class Doodle:
             stdout = data['result'][1].get('stdout', '')
             output = stdout.strip()
         else:
-            print("No result found or error in execution")
+            raise Exception("No result found or error in execution")
 
         self._submodel = output
 
@@ -172,7 +172,7 @@ class Doodle:
             firmware_version = board_info['release']['version']
             return firmware_version
         else:
-            print("No result found or error in execution")
+            raise Exception("No result found or error in execution")
 
         return None
 
@@ -241,7 +241,7 @@ class Doodle:
         if 'result' in data and len(data['result']) > 1:        
             results = data['result'][1].get('results', -1)
         else:
-            print("No result found or error in execution")
+            raise Exception("No result found or error in execution")
 
         self._availible_channels = [ch_info.get('channel') for ch_info in results]
 
@@ -285,7 +285,7 @@ class Doodle:
         if 'result' in data and len(data['result']) > 1:   
             models = json.loads(data['result'][1]['stdout'])['models']
         else:
-            print("No result found or error in execution")
+            raise Exception("No result found or error in execution")
 
         for model in models:
             if model.get('model', '') == self._submodel:
@@ -309,7 +309,7 @@ class Doodle:
             stdout = data['result'][1].get('stdout', '')
             output = stdout.strip()
         else:
-            print("No result found or error in execution")
+            raise Exception("No result found or error in execution")
 
         self._parent_model = stdout
         return self._parent_model
@@ -332,7 +332,7 @@ class Doodle:
             stdout = data['result'][1].get('stdout', '')
             output = stdout.strip()
         else:
-            print("No result found or error in execution")
+            raise Exception("No result found or error in execution")
 
         pattern = r'sub_model\d+="([^"]+)"'
         self._availible_models = re.findall(pattern, stdout)
