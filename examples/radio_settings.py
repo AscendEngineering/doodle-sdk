@@ -5,33 +5,22 @@ import time
 if __name__ == '__main__':
 
     # Connect to radio
-    doodle1 = Doodle(ip="10.223.97.204", user="user", password="DoodleSmartRadio")
-
+    doodle1 = Doodle(ip="10.223.84.236", user="user", password="DoodleSmartRadio")
     doodle1_connected = doodle1.connect()
-    
-    doodle1.get_availible_channel_widths()
-    doodle1.get_availible_submodels()
 
-    # # Get the rssi values
-    doodle1.get_channel_info()
-    doodle1.get_frequency()
-
-    print("Frequency:", doodle1._frequency)
-    print("Channel:", doodle1._channel)
-    print("Channel Width:", doodle1._channel_width)
+    print("Frequency:", doodle1.get_frequency())
+    print("Channel:", doodle1.get_channel())
+    print("Channel Width:", doodle1.get_channel_width())
     print("Version:", doodle1.get_firmware_version())
 
     print('------------------------')
 
     # Set the frequency, channel, bandwidth
-    doodle1.set_frequency(915)
+    doodle1.set_frequency(2450)
     doodle1.set_channel(10)
     doodle1.set_channel_width(5)
 
-    # Get the rssi values
-    doodle1.get_channel_info()
-    doodle1.get_frequency()
-
-    print("Frequency:", doodle1._frequency)
-    print("Channel:", doodle1._channel)
-    print("Channel Width:", doodle1._channel_width)
+    print("Frequency:", doodle1.get_frequency())
+    print("Channel:", doodle1.get_channel())
+    print("Channel Width:", doodle1.get_channel_width())
+    print("Version:", doodle1.get_firmware_version())

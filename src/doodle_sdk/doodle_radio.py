@@ -108,6 +108,16 @@ class Doodle:
         
         return stats_response
 
+    def get_channel(self):
+        ch_info = self.get_channel_info()
+        
+        return ch_info[0] if ch_info else None
+
+    def get_channel_width(self):
+        ch_info = self.get_channel_info()
+        
+        return ch_info[1] if ch_info else None
+
     def get_channel_info(self):
 
         self.check_token()
