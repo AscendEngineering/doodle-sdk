@@ -6,9 +6,8 @@ def translate_channel_frequency_response(response: dict):
 
     if match:
         channel = match.group(1)
-        frequency = match.group(2)
         width = match.group(3)
     else:
-        print("Channel, frequency, and width information not found.")
+        print("Channel, and width information not found.")
 
-    return int(channel), int(frequency), int(width)
+    return int(channel), int(width)
