@@ -4,6 +4,5 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "doodle_sdk"
-version = "0.1.0"
-dynamic = ["description", "readme", "requires-python", "authors", "optional-dependencies", "classifiers", "dependencies"]
+dynamic = ["description", "readme", "requires-python", "authors","version", "optional-dependencies", "classifiers", "dependencies"]
 

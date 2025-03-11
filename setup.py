@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="doodle-sdk",  # Replace with your package name
-    version="0.1.0",
+    version="0.1.2",
     description="SDK for better interfacing of Doodle Labs Radio",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",

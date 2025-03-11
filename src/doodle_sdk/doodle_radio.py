@@ -96,8 +96,8 @@ class Doodle:
         
 
     def get_associated_list(self):
-        self.check_token()
 
+        self.check_token()
         assoclist_payload = self._gen_assoclist_payload(self._token)
         response = self._session.post(self._url, json=assoclist_payload, verify=False, timeout=1)
         
@@ -119,7 +119,6 @@ class Doodle:
         return ch_info[1] if ch_info else None
 
     def get_channel_info(self):
-
         self.check_token()
 
         channel_frequency_payload = self._send_command_payload(self._token, "iw", ["wlan0", "info"])
