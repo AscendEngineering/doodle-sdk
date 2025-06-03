@@ -1,5 +1,0 @@
-config dynamic_mesh 'dynamic_mesh'
-	option disabled 1
-	option device 'webway0'
-	option unicast_routing 'braided'
-

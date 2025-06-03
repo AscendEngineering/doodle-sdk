@@ -1,7 +1,0 @@
-
-config led_blink 'general'
-	option inactive_thres '1000'
-	option blink_rate '0.3'
-	option gpio_selected '2'
-	option enable '0'
-

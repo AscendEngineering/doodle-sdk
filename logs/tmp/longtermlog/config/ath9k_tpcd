@@ -1,5 +1,0 @@
-config ath9k_tpcd 'general'
-	option sounding_interval '5'
-	option station_max_signal '-30'
-	option station_min_signal '-35'
-	option lna_rssi_gain '20'

@@ -1,5 +1,0 @@
-
-config general
-	option log_path '/tmp/longtermlog/status.json'
-	option enabled '1'
-
