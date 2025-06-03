@@ -3,6 +3,8 @@ import json
 import re
 import warnings
 import time
+import base64
+import os
 from typing import Dict
 from . import stats
 from . import settings
@@ -349,6 +351,122 @@ class Doodle:
             self._availible_frequencies.append(int(match.group(1)) if match else 0)
 
         return self._availible_frequencies
+
+    def enable_link_status_log(self):
+        """Enable the link status log on the doodle radio
+        
+        Returns:
+            True if successful, False otherwise
+        """
+        self.check_token()
+        
+        # Set the configuration
+        enable_log_payload = self._send_command_payload(self._token, "uci", 
+                                                       ["set", "link_status_log.@general[0].enabled=1"])
+        
+        response = self._session.post(self._url, json=enable_log_payload, verify=False, timeout=10)
+        
+        if response.status_code != 200:
+            response = self._retry(response, enable_log_payload, 10)
+        
+        if response.status_code != 200:
+            return False
+        
+        # Commit the changes
+        commit_payload = self._send_command_payload(self._token, "uci", ["commit"])
+        
+        response = self._session.post(self._url, json=commit_payload, verify=False, timeout=10)
+        
+        if response.status_code != 200:
+            response = self._retry(response, commit_payload, 10)
+        
+        return response.status_code == 200
+
+    def get_link_status_log_location(self):
+        """Get the latest link status log file location
+        
+        Returns:
+            String containing the log file path if successful, None otherwise
+        """
+        self.check_token()
+        
+        log_location_payload = self._send_command_payload(self._token, "/usr/bin/link-status.sh", ["LOGS"])
+        
+        response = self._session.post(self._url, json=log_location_payload, verify=False, timeout=10)
+        
+        if response.status_code != 200:
+            response = self._retry(response, log_location_payload, 10)
+        
+        if response.status_code != 200:
+            return None
+        
+        data = response.json()
+                
+        if 'result' in data and len(data['result']) > 1:
+            stdout = data['result'][1].get('stdout', '')
+            return stdout.strip()
+        else:
+            return None
+
+    def download_link_status_log(self, log_file_path: str, download_folder: str = "."):
+        """Download the link status log file from the radio
+        
+        Args:
+            log_file_path: Path to the log file on the radio (from get_link_status_log_location)
+            download_folder: Local folder to save the file (defaults to current directory)
+            
+        Returns:
+            String containing the local file path if successful, None otherwise
+        """
+        self.check_token()
+        
+        # Create the download folder if it doesn't exist
+        if not os.path.exists(download_folder):
+            os.makedirs(download_folder)
+        
+        # Create payload to read the file with base64 encoding
+        read_file_payload = {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "call",
+            "params": [self._token, "file", "read", {
+                "path": log_file_path,
+                "base64": True
+            }]
+        }
+        
+        response = self._session.post(self._url, json=read_file_payload, verify=False, timeout=30)
+        
+        if response.status_code != 200:
+            response = self._retry(response, read_file_payload, 30)
+        
+        if response.status_code != 200:
+            return None
+        
+        data = response.json()
+        
+        if 'result' in data and len(data['result']) > 1:
+            file_data = data['result'][1].get('data', '')
+            if file_data:
+                # Decode base64 data
+                try:
+                    decoded_data = base64.b64decode(file_data)
+                    
+                    # Extract filename from path
+                    filename = os.path.basename(log_file_path)
+                    local_file_path = os.path.join(download_folder, filename)
+                    
+                    # Write the file
+                    with open(local_file_path, 'wb') as f:
+                        f.write(decoded_data)
+                    
+                    return local_file_path
+                except Exception as e:
+                    return None
+            else:
+                return None
+        else:
+            return None
 
     def check_token(self):
         if not self._token or not self._url:
