@@ -1,0 +1,8 @@
+
+config cannelloni 'global'
+	option listenport '2000'
+	option remoteport '2000'
+	option remoteIP '10.223.0.1'
+	option enabled '0'
+	option role 'udp'
+

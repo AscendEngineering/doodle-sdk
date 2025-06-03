@@ -1,0 +1,377 @@
+[    0.000000] Linux version 4.14.221 (buildbot@doodlelabs.com) (gcc version 7.5.0 (OpenWrt GCC 7.5.0 r11306-c4a6851c72)) #0 Thu May 5 13:25:36 2022
+[    0.000000] MyLoader: sysp=d679773b, boardp=8ea30a71, parts=df36efe9
+[    0.000000] bootconsole [early0] enabled
+[    0.000000] CPU0 revision is: 00019374 (MIPS 24Kc)
+[    0.000000] SoC: Qualcomm Atheros QCA9533 ver 2 rev 0
+[    0.000000] Determined physical RAM map:
+[    0.000000]  memory: 04000000 @ 00000000 (usable)
+[    0.000000] Initrd not found or empty - disabling initrd
+[    0.000000] Primary instruction cache 64kB, VIPT, 4-way, linesize 32 bytes.
+[    0.000000] Primary data cache 32kB, 4-way, VIPT, cache aliases, linesize 32 bytes
+[    0.000000] Zone ranges:
+[    0.000000]   Normal   [mem 0x0000000000000000-0x0000000003ffffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000000000-0x0000000003ffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000000000-0x0000000003ffffff]
+[    0.000000] On node 0 totalpages: 16384
+[    0.000000] free_area_init_node: node 0, pgdat 805cd2a0, node_mem_map 81000020
+[    0.000000]   Normal zone: 128 pages used for memmap
+[    0.000000]   Normal zone: 0 pages reserved
+[    0.000000]   Normal zone: 16384 pages, LIFO batch:3
+[    0.000000] random: get_random_bytes called from start_kernel+0x90/0x484 with crng_init=0
+[    0.000000] pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+[    0.000000] pcpu-alloc: [0] 0 
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 16256
+[    0.000000] Kernel command line:  board=SMARTRADIO mtdparts=spi0.0:256k(u-boot)ro,256k(u-boot-env)ro,256k(art)ro,-(firmware);spi0.1:-(ubi) console=ttyS0,115200 rootfstype=squashfs noinitrd loglevel=0
+[    0.000000] PID hash table entries: 256 (order: -2, 1024 bytes)
+[    0.000000] Dentry cache hash table entries: 8192 (order: 3, 32768 bytes)
+[    0.000000] Inode-cache hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.000000] Writing ErrCtl register=00000000
+[    0.000000] Readback ErrCtl register=00000000
+[    0.000000] Memory: 58428K/65536K available (4337K kernel code, 207K rwdata, 1016K rodata, 320K init, 212K bss, 7108K reserved, 0K cma-reserved)
+[    0.000000] SLUB: HWalign=32, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] NR_IRQS: 51
+[    0.000000] Clocks: CPU:650.000MHz, DDR:597.412MHz, AHB:216.666MHz, Ref:25.000MHz
+[    0.000000] clocksource: MIPS: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 5880801374 ns
+[    0.000008] sched_clock: 32 bits at 325MHz, resolution 3ns, wraps every 6607641598ns
+[    0.000046] Calibrating delay loop... 432.53 BogoMIPS (lpj=2162688)
+[    0.060049] pid_max: default: 32768 minimum: 301
+[    0.060270] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.060287] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.062531] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.062549] futex hash table entries: 256 (order: -1, 3072 bytes)
+[    0.063024] NET: Registered protocol family 16
+[    0.064431] MIPS: machine is DoodleLabs SmartRadio
+[    0.546495] registering PCI controller with io_map_base unset
+[    0.562853] PCI host bridge to bus 0000:00
+[    0.562878] pci_bus 0000:00: root bus resource [mem 0x10000000-0x11ffffff]
+[    0.562887] pci_bus 0000:00: root bus resource [io  0x0000]
+[    0.562898] pci_bus 0000:00: root bus resource [??? 0x00000000 flags 0x0]
+[    0.562908] pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+[    0.562955] pci 0000:00:00.0: [168c:0033] type 00 class 0x028000
+[    0.563014] pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x0001ffff 64bit]
+[    0.563068] pci 0000:00:00.0: reg 0x30: [mem 0x00000000-0x0000ffff pref]
+[    0.563145] pci 0000:00:00.0: supports D1
+[    0.563154] pci 0000:00:00.0: PME# supported from D0 D1 D3hot
+[    0.563346] pci_bus 0000:00: busn_res: [bus 00-ff] end is updated to 00
+[    0.563376] pci 0000:00:00.0: BAR 0: assigned [mem 0x10000000-0x1001ffff 64bit]
+[    0.563406] pci 0000:00:00.0: BAR 6: assigned [mem 0x10020000-0x1002ffff pref]
+[    0.564074] clocksource: Switched to clocksource MIPS
+[    0.565211] NET: Registered protocol family 2
+[    0.566059] TCP established hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.566089] TCP bind hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.566114] TCP: Hash tables configured (established 1024 bind 1024)
+[    0.566266] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.566298] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.566531] NET: Registered protocol family 1
+[    0.566576] PCI: CLS 0 bytes, default 32
+[    0.571757] Crashlog allocated RAM at address 0x3f00000
+[    0.571848] Initialise system trusted keyrings
+[    0.572830] workingset: timestamp_bits=30 max_order=14 bucket_order=0
+[    0.577979] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.577986] jffs2: version 2.2 (NAND) (SUMMARY) (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.
+[    0.588234] Key type asymmetric registered
+[    0.588245] Asymmetric key parser 'x509' registered
+[    0.588249] Key type pkcs7_test registered
+[    0.588273] io scheduler noop registered
+[    0.588278] io scheduler deadline registered (default)
+[    0.588563] Serial: 8250/16550 driver, 1 ports, IRQ sharing disabled
+[    0.588931] console [ttyS0] disabled
+[    0.609097] serial8250.0: ttyS0 at MMIO 0x18020000 (irq = 11, base_baud = 1562500) is a 16550A
+[    0.609128] console [ttyS0] enabled
+[    0.609133] bootconsole [early0] disabled
+[    0.613202] m25p80 spi0.0: found w25q256, expected m25p80
+[    0.622416] m25p80 spi0.0: w25q256 (32768 Kbytes)
+[    0.622454] 4 cmdlinepart partitions found on MTD device spi0.0
+[    0.622458] Creating 4 MTD partitions on "spi0.0":
+[    0.622476] 0x000000000000-0x000000040000 : "u-boot"
+[    0.623824] 0x000000040000-0x000000080000 : "u-boot-env"
+[    0.625713] 0x000000080000-0x0000000c0000 : "art"
+[    0.627296] 0x0000000c0000-0x000002000000 : "firmware"
+[    0.678125] 2 uimage-fw partitions found on MTD device firmware
+[    0.678148] 0x0000000c0000-0x000000290000 : "kernel"
+[    0.678865] 0x000000290000-0x000002000000 : "rootfs"
+[    0.679541] mtd: device 5 (rootfs) set to be root filesystem
+[    0.680813] 1 squashfs-split partitions found on MTD device rootfs
+[    0.680847] 0x000000c80000-0x000002000000 : "rootfs_data"
+[    0.683229] libphy: Fixed MDIO Bus: probed
+[    0.699911] libphy: ag71xx_mdio: probed
+[    1.327076] ag71xx ag71xx.0: connected to PHY at ag71xx-mdio.1:00 [uid=004dd042, driver=Generic PHY]
+[    1.327641] eth0: Atheros AG71xx at 0xb9000000, irq 4, mode: mii
+[    1.956637] ag71xx-mdio.1: Found an AR934X built-in switch
+[    1.999838] eth1: Atheros AG71xx at 0xba000000, irq 5, mode: gmii
+[    2.008473] nand: No NAND device found
+[    2.008881] nf_conntrack version 0.5.0 (1024 buckets, 4096 max)
+[    2.009985] NET: Registered protocol family 10
+[    2.012691] Segment Routing with IPv6
+[    2.012787] NET: Registered protocol family 17
+[    2.012836] bridge: filtering via arp/ip/ip6tables is no longer available by default. Update your scripts to load br_netfilter if you need this.
+[    2.013403] 8021q: 802.1Q VLAN Support v1.8
+[    2.013832] Loading compiled-in X.509 certificates
+[    2.028031] Loaded X.509 cert 'Build time autogenerated kernel key: a3c47babac67020725288faec9910bd48da5e97f'
+[    2.028040] Problem parsing in-kernel X.509 certificate list
+[    2.036285] VFS: Mounted root (squashfs filesystem) readonly on device 31:5.
+[    2.038077] Freeing unused kernel memory: 320K
+[    2.038082] This architecture does not have kernel memory protection.
+[    2.504100] random: fast init done
+[    2.544447] init: Console is alive
+[    2.544676] init: - watchdog -
+[    4.643310] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    4.669604] crc32c_generic: module verification failed: signature and/or required key missing - tainting kernel
+[    4.689887] usbcore: registered new interface driver usbfs
+[    4.689963] usbcore: registered new interface driver hub
+[    4.690054] usbcore: registered new device driver usb
+[    4.696060] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    4.697499] ehci-platform: EHCI generic platform driver
+[    4.697583] ehci-platform ehci-platform: EHCI Host Controller
+[    4.697619] ehci-platform ehci-platform: new USB bus registered, assigned bus number 1
+[    4.699722] ehci-platform ehci-platform: irq 3, io mem 0x1b000000
+[    4.724093] ehci-platform ehci-platform: USB 2.0 started, EHCI 1.00
+[    4.724866] hub 1-0:1.0: USB hub found
+[    4.725024] hub 1-0:1.0: 1 port detected
+[    4.726494] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    4.730828] init: - preinit -
+[    5.114186] usb 1-1: new high-speed USB device number 2 using ehci-platform
+[    5.315792] random: procd: uninitialized urandom read (4 bytes read)
+[    5.316469] hub 1-1:1.0: USB hub found
+[    5.316698] hub 1-1:1.0: 4 ports detected
+[    5.496292] jffs2: notice: (413) jffs2_build_xattr_subsystem: complete building xattr subsystem, 3 of xdatum (0 unchecked, 3 orphan) and 79 of xref (1 dead, 78 orphan) found.
+[    5.498062] mount_root: overlay filesystem has not been fully initialized yet
+[    5.499998] mount_root: switching to jffs2 overlay
+[    5.568562] overlayfs: upper fs does not support tmpfile.
+[    5.636558] usb 1-1.1: new full-speed USB device number 3 using ehci-platform
+[    5.851043] urandom-seed: Seed file not found (/etc/urandom.seed)
+[    5.897977] procd: - early -
+[    5.898080] procd: - watchdog -
+[    5.945627] usb 1-1.3: new full-speed USB device number 4 using ehci-platform
+[    6.607461] procd: - watchdog -
+[    6.607760] procd: - ubus -
+[    6.639926] random: ubusd: uninitialized urandom read (4 bytes read)
+[    6.672641] random: ubusd: uninitialized urandom read (4 bytes read)
+[    6.673129] random: ubusd: uninitialized urandom read (4 bytes read)
+[    6.674158] procd: - init -
+[    7.444042] kmodloader: loading kernel modules from /etc/modules.d/*
+[    7.538534] NET: Registered protocol family 15
+[    7.542838] Initializing XFRM netlink socket
+[    7.664578] l2tp_core: L2TP core driver, V2.0
+[    7.675669] l2tp_netlink: L2TP netlink interface
+[    7.689580] sctp: Hash tables configured (bind 1024/1024)
+[    7.737173] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[    7.782319] hidraw: raw HID events driver (C) Jiri Kosina
+[    7.805633] Mirror/redirect action on
+[    7.845462] u32 classifier
+[    7.845471]     input device check on
+[    7.845474]     Actions configured
+[    7.873862] urngd: v1.0.2 started.
+[    7.895374] GACT probability on
+[    7.926964] Simple TC action Loaded
+[    8.029320] Bridge firewalling registered
+[    8.046171] can: controller area network core (rev 20170425 abi 9)
+[    8.046283] NET: Registered protocol family 29
+[    8.051626] can: broadcast manager protocol (rev 20170425 t)
+[    8.058126] CAN device driver interface
+[    8.062450] can: netlink gateway (rev 20170425) max_hops=1
+[    8.066349] can: raw protocol (rev 20170425)
+[    8.077658] cdc_acm 1-1.3:1.0: ttyACM0: USB ACM device
+[    8.084863] cdc_acm 1-1.3:1.2: ttyACM1: USB ACM device
+[    8.086864] usbcore: registered new interface driver cdc_acm
+[    8.086874] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    8.096266] usbcore: registered new interface driver cdc_wdm
+[    8.099686] Loading modules backported from Linux version v4.19.161-0-gdaefdc9eb24b
+[    8.099696] Backport generated by backports.git v4.19.161-1-0-g4bb568fe
+[    8.118949] usbcore: registered new interface driver ems_usb
+[    8.126689] usbcore: registered new interface driver esd_usb2
+[    8.140798] hso: drivers/net/usb/hso.c: Option Wireless
+[    8.141014] usbcore: registered new interface driver hso
+[    8.145493] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    8.166323] usbcore: registered new interface driver ipheth
+[    8.176440] usbcore: registered new interface driver kaweth
+[    8.186934] usbcore: registered new interface driver kvaser_usb
+[    8.512452] usbcore: registered new interface driver peak_usb
+[    8.515387] pegasus: v0.9.3 (2013/04/25), Pegasus/Pegasus II USB Ethernet driver
+[    8.515570] usbcore: registered new interface driver pegasus
+[    8.538606] usbcore: registered new interface driver r8152
+[    8.546557] usbcore: registered new interface driver rtl8150
+[    8.553086] slcan: serial line CAN interface driver
+[    8.553102] slcan: 10 dynamic interface channels.
+[    8.556885] random: crng init done
+[    8.556899] random: 6 urandom warning(s) missed due to ratelimiting
+[    8.587246] usbcore: registered new interface driver usb_8dev
+[    8.620383] hid-generic 0003:04D9:002F.0001: hiddev96,hidraw0: USB HID v1.11 Device [Microchip Technology Inc. Simple HID Device Demo] on usb-ehci-platform-1.1/input0
+[    8.620628] usbcore: registered new interface driver usbhid
+[    8.620632] usbhid: USB HID core driver
+[    8.662297] usbcore: registered new interface driver usbserial
+[    8.662377] usbcore: registered new interface driver usbserial_generic
+[    8.662448] usbserial: USB Serial support registered for generic
+[    8.684918] vcan: Virtual CAN interface driver
+[    8.779514] xt_time: kernel timezone is -0000
+[    8.783688] usbcore: registered new interface driver asix
+[    8.798318] usbcore: registered new interface driver ax88179_178a
+[    8.806176] usbcore: registered new interface driver cdc_eem
+[    8.809870] usbcore: registered new interface driver cdc_ether
+[    8.829114] usbcore: registered new interface driver cdc_ncm
+[    8.835925] usbcore: registered new interface driver cdc_subset
+[    9.059217] usbcore: registered new interface driver ch341
+[    9.059292] usbserial: USB Serial support registered for ch341-uart
+[    9.075713] usbcore: registered new interface driver cp210x
+[    9.075787] usbserial: USB Serial support registered for cp210x
+[    9.079489] usbcore: registered new interface driver dm9601
+[    9.086788] usbcore: registered new interface driver ftdi_sio
+[    9.086873] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    9.095949] usbcore: registered new interface driver huawei_cdc_ncm
+[    9.120084] usbcore: registered new interface driver kalmia
+[    9.526762] usbcore: registered new interface driver MOSCHIP usb-ethernet driver
+[    9.538651] usbcore: registered new interface driver pl2303
+[    9.538727] usbserial: USB Serial support registered for pl2303
+[    9.544294] PPP generic driver version 2.4.2
+[    9.565735] NET: Registered protocol family 24
+[    9.569643] usbcore: registered new interface driver qmi_wwan
+[    9.577692] usbcore: registered new interface driver rndis_host
+[    9.586755] usbcore: registered new interface driver sierra_net
+[    9.598161] usbcore: registered new interface driver smsc95xx
+[    9.620790] usbcore: registered new interface driver snd-usb-audio
+[    9.659706] usbcore: registered new interface driver sr9700
+[    9.669744] webway: version: 24.1-2-g7020e2f commit: 7020e2f3f1145767c0dacfeefadfea4e888963e1
+[    9.874287] batman_adv: B.A.T.M.A.N. advanced 2021.0-openwrt-1 (compatibility version 15) loaded
+[    9.877475] usbcore: registered new interface driver cdc_mbim
+[    9.888001] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    9.889183] nckernel: module license 'Proprietary' taints kernel.
+[    9.889192] Disabling lock debugging due to kernel taint
+[    9.890022] nckernel: version: 24.1-0-gabfad0c commit: abfad0c4e8c261ef2cb526e4fca9949663190abb
+[    9.942065] ath: EEPROM regdomain: 0x0
+[    9.942074] ath: EEPROM indicates default country code should be used
+[    9.942078] ath: doing EEPROM country->regdmn map search
+[    9.942093] ath: country maps to regdmn code: 0x3a
+[    9.942099] ath: Country alpha2 being used: US
+[    9.942102] ath: Regpair used: 0x3a
+[    9.955432] ieee80211 phy0: Selected rate control algorithm 'minstrel_ht'
+[    9.958990] ieee80211 phy0: Atheros AR9531 Rev:2 mem=0xb8100000, irq=47
+[    9.959187] pci 0000:00:00.0: using irq 40 for pin 1
+[    9.959213] PCI: Enabling device 0000:00:00.0 (0000 -> 0002)
+[    9.968814] ath: EEPROM regdomain: 0x0
+[    9.968823] ath: EEPROM indicates default country code should be used
+[    9.968826] ath: doing EEPROM country->regdmn map search
+[    9.968842] ath: country maps to regdmn code: 0x3a
+[    9.968848] ath: Country alpha2 being used: US
+[    9.968851] ath: Regpair used: 0x3a
+[    9.981335] ieee80211 phy1: Selected rate control algorithm 'minstrel_ht'
+[    9.984997] ieee80211 phy1: Atheros AR9300 Rev:4 mem=0xb0000000, irq=40
+[   10.114913] kmodloader: done loading kernel modules from /etc/modules.d/*
+[   54.650186] ath: phy0: Device not present
+[   55.484602] br-wan: port 1(eth0) entered blocking state
+[   55.484618] br-wan: port 1(eth0) entered disabled state
+[   55.484914] device eth0 entered promiscuous mode
+[   55.487271] IPv6: ADDRCONF(NETDEV_UP): br-wan: link is not ready
+[   56.273319] br-wan: port 2(eth1) entered blocking state
+[   56.273333] br-wan: port 2(eth1) entered disabled state
+[   56.273629] device eth1 entered promiscuous mode
+[   56.273733] br-wan: port 2(eth1) entered blocking state
+[   56.273743] br-wan: port 2(eth1) entered forwarding state
+[   56.273877] IPv6: ADDRCONF(NETDEV_CHANGE): br-wan: link becomes ready
+[   56.486558] br-wan: port 2(eth1) entered disabled state
+[   58.153878] ath: phy0: Device not present
+[   58.567770] eth0: link up (100Mbps/Full duplex)
+[   58.567823] br-wan: port 1(eth0) entered blocking state
+[   58.567833] br-wan: port 1(eth0) entered forwarding state
+[   59.113784] 8021q: adding VLAN 0 to HW filter on device bat0
+[   59.144554] br-wan: port 3(bat0) entered blocking state
+[   59.144567] br-wan: port 3(bat0) entered disabled state
+[   59.144890] device bat0 entered promiscuous mode
+[   59.145020] br-wan: port 3(bat0) entered blocking state
+[   59.145031] br-wan: port 3(bat0) entered forwarding state
+[   59.374218] batman_adv: bat0: No IGMP Querier present - multicast optimizations disabled
+[   59.374228] batman_adv: bat0: No MLD Querier present - multicast optimizations disabled
+[   63.324942] Setting freqshift -100000000 Hz
+[   65.504194] batman_adv: bat0: IGMP Querier appeared
+[   65.504204] batman_adv: bat0: MLD Querier appeared
+[   66.269119] ath: EEPROM regdomain: 0x8348
+[   66.269128] ath: EEPROM indicates we should expect a country code
+[   66.269135] ath: doing EEPROM country->regdmn map search
+[   66.269141] ath: country maps to regdmn code: 0x3a
+[   66.269146] ath: Country alpha2 being used: US
+[   66.269149] ath: Regpair used: 0x3a
+[   66.269156] ath: regdomain 0x8348 dynamically updated by user
+[   66.269329] ath: EEPROM regdomain: 0x8348
+[   66.269332] ath: EEPROM indicates we should expect a country code
+[   66.269339] ath: doing EEPROM country->regdmn map search
+[   66.269344] ath: country maps to regdmn code: 0x3a
+[   66.269347] ath: Country alpha2 being used: US
+[   66.269351] ath: Regpair used: 0x3a
+[   66.269355] ath: regdomain 0x8348 dynamically updated by user
+[   70.377816] IPv6: ADDRCONF(NETDEV_UP): wlan0: link is not ready
+[   73.192644] IPv6: ADDRCONF(NETDEV_UP): wlan1: link is not ready
+[   73.198081] br-wan: port 4(wlan1) entered blocking state
+[   73.198095] br-wan: port 4(wlan1) entered disabled state
+[   73.198427] device wlan1 entered promiscuous mode
+[   73.748280] IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+[   74.089014] batman_adv: bat0: Adding interface: wlan0
+[   74.089040] batman_adv: bat0: Interface activated: wlan0
+[   87.936641] IPv6: ADDRCONF(NETDEV_CHANGE): wlan1: link becomes ready
+[   87.936861] br-wan: port 4(wlan1) entered blocking state
+[   87.936873] br-wan: port 4(wlan1) entered forwarding state
+[   98.757435] ehci-platform ehci-platform: remove, state 1
+[   98.757472] usb usb1: USB disconnect, device number 1
+[   98.757482] usb 1-1: USB disconnect, device number 2
+[   98.757491] usb 1-1.1: USB disconnect, device number 3
+[   98.760205] usb 1-1.3: USB disconnect, device number 4
+[   98.770369] ehci-platform ehci-platform: USB bus 1 deregistered
+[   98.770862] ehci-platform ehci-platform: EHCI Host Controller
+[   98.770900] ehci-platform ehci-platform: new USB bus registered, assigned bus number 1
+[   98.773025] ehci-platform ehci-platform: irq 3, io mem 0x1b000000
+[   98.794164] ehci-platform ehci-platform: USB 2.0 started, EHCI 1.00
+[   98.795589] hub 1-0:1.0: USB hub found
+[   98.795905] hub 1-0:1.0: 1 port detected
+[   99.294211] usb 1-1: new high-speed USB device number 2 using ehci-platform
+[   99.496226] hub 1-1:1.0: USB hub found
+[   99.496830] hub 1-1:1.0: 4 ports detected
+[  101.184154] usb 1-1.1: new full-speed USB device number 3 using ehci-platform
+[  101.519546] hid-generic 0003:04D9:002F.0002: hiddev96,hidraw0: USB HID v1.11 Device [Microchip Technology Inc. Simple HID Device Demo] on usb-ehci-platform-1.1/input0
+[  101.974188] usb 1-1.3: new full-speed USB device number 4 using ehci-platform
+[  102.788477] cdc_acm 1-1.3:1.0: ttyACM0: USB ACM device
+[  102.825707] cdc_acm 1-1.3:1.2: ttyACM1: USB ACM device
+[  116.205690] ehci-platform ehci-platform: remove, state 1
+[  116.205728] usb usb1: USB disconnect, device number 1
+[  116.205737] usb 1-1: USB disconnect, device number 2
+[  116.205746] usb 1-1.1: USB disconnect, device number 3
+[  116.206336] usb 1-1.3: USB disconnect, device number 4
+[  116.220553] ehci-platform ehci-platform: USB bus 1 deregistered
+[  116.221056] ehci-platform ehci-platform: EHCI Host Controller
+[  116.221095] ehci-platform ehci-platform: new USB bus registered, assigned bus number 1
+[  116.223219] ehci-platform ehci-platform: irq 3, io mem 0x1b000000
+[  116.244155] ehci-platform ehci-platform: USB 2.0 started, EHCI 1.00
+[  116.245565] hub 1-0:1.0: USB hub found
+[  116.245888] hub 1-0:1.0: 1 port detected
+[  116.614162] usb 1-1: new high-speed USB device number 2 using ehci-platform
+[  116.816168] hub 1-1:1.0: USB hub found
+[  116.816776] hub 1-1:1.0: 4 ports detected
+[  117.134172] usb 1-1.1: new full-speed USB device number 3 using ehci-platform
+[  117.317197] hid-generic 0003:04D9:002F.0003: hiddev96,hidraw0: USB HID v1.11 Device [Microchip Technology Inc. Simple HID Device Demo] on usb-ehci-platform-1.1/input0
+[  117.494160] usb 1-1.3: new full-speed USB device number 4 using ehci-platform
+[  117.648829] cdc_acm 1-1.3:1.0: ttyACM0: USB ACM device
+[  117.650622] cdc_acm 1-1.3:1.2: ttyACM1: USB ACM device
+[  121.408925] ehci-platform ehci-platform: remove, state 1
+[  121.408963] usb usb1: USB disconnect, device number 1
+[  121.408972] usb 1-1: USB disconnect, device number 2
+[  121.408981] usb 1-1.1: USB disconnect, device number 3
+[  121.411653] usb 1-1.3: USB disconnect, device number 4
+[  121.426742] ehci-platform ehci-platform: USB bus 1 deregistered
+[  121.427247] ehci-platform ehci-platform: EHCI Host Controller
+[  121.427284] ehci-platform ehci-platform: new USB bus registered, assigned bus number 1
+[  121.429406] ehci-platform ehci-platform: irq 3, io mem 0x1b000000
+[  121.455850] ehci-platform ehci-platform: USB 2.0 started, EHCI 1.00
+[  121.457360] hub 1-0:1.0: USB hub found
+[  121.457767] hub 1-0:1.0: 1 port detected
+[  121.824165] usb 1-1: new high-speed USB device number 2 using ehci-platform
+[  122.026425] hub 1-1:1.0: USB hub found
+[  122.027054] hub 1-1:1.0: 4 ports detected
+[  122.467712] usb 1-1.1: new full-speed USB device number 3 using ehci-platform
+[  122.846559] hid-generic 0003:04D9:002F.0004: hiddev96,hidraw0: USB HID v1.11 Device [Microchip Technology Inc. Simple HID Device Demo] on usb-ehci-platform-1.1/input0
+[  123.195229] usb 1-1.3: new full-speed USB device number 4 using ehci-platform
+[  123.348659] cdc_acm 1-1.3:1.0: ttyACM0: USB ACM device
+[  123.350411] cdc_acm 1-1.3:1.2: ttyACM1: USB ACM device
+[  153.200722] wearable: start_service initiated,RM-915-2KM-XW
+[  153.283573] wearable: pre_init starting... 
+[  157.363337] gps okay
+[  157.363530] wearable: pre_init done 
+[  158.308359] setting antennas tx=3,rx=3

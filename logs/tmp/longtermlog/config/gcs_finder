@@ -1,0 +1,10 @@
+
+config gcs_finder 'general'
+	option enable '0'
+	option broadcast_addr '10.223.255.255'
+	option sport '2000'
+	option conn_timeout '30'
+	option baudrate '57600'
+	option tty_path '/dev/uart0'
+	option source_addr '10.223.166.69'
+

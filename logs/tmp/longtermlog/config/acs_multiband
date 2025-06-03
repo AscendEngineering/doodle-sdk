@@ -1,0 +1,40 @@
+
+config global 'settings'
+	option enable '0'
+	option busy_time '80'
+	option packet_ratio '60'
+	option packet_loss '100'
+	option supported_peer '1'
+	option is_main_peer '0'
+	option scan_type '0'
+	option activated '0'
+	option max_channel_number '18'
+	option recovery_option '1'
+	option timer2 '15000'
+	option reset_acs '1'
+	option hot_swap '0'
+	option boot '0'
+
+config acs 'debug'
+	option log_level 'info'
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+
+config acs_channels
+

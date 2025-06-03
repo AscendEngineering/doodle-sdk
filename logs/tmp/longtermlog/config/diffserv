@@ -1,0 +1,29 @@
+
+config general
+	option enabled '1'
+	option optimized_vi '1'
+	option optimized_cc '1'
+	option vi_drop_signal_threshold '-95'
+	option vi_drop_signal_ratio '90'
+	option vi_backlog_trigger '0'
+	option vi_queue_backlog '0'
+	option low_latency '0'
+	option diversity_rates '0'
+
+config qdetection
+	option qdetection_enabled '1'
+	option rate_threshold '400'
+	option size_threshold '400'
+
+config mark
+	option ports '2000'
+	option dscp 'CS6'
+	option proto 'udp'
+	option comment 'socat raw'
+
+config mark
+	option ports '14550'
+	option dscp 'CS6'
+	option proto 'udp'
+	option comment 'QGC/MAVlink'
+

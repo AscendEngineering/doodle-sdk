@@ -1,0 +1,10 @@
+ipv4     2 tcp      6 7426 ESTABLISHED src=10.223.0.150 dst=10.223.166.69 sport=50348 dport=22 packets=43 bytes=4982 src=10.223.166.69 dst=10.223.0.150 sport=22 dport=50348 packets=65 bytes=10702 [ASSURED] mark=0 delta-time=513 use=2
+ipv4     2 tcp      6 8 CLOSE src=10.223.0.150 dst=10.223.166.69 sport=39776 dport=443 packets=5 bytes=773 src=10.223.166.69 dst=10.223.0.150 sport=443 dport=39776 packets=3 bytes=260 [ASSURED] mark=0 delta-time=1 use=2
+ipv4     2 unknown  2 583 src=0.0.0.0 dst=224.0.0.1 [UNREPLIED] src=224.0.0.1 dst=0.0.0.0 mark=0 use=2
+ipv4     2 udp      17 57 src=10.223.0.150 dst=224.0.0.251 sport=5353 dport=5353 packets=12 bytes=2362 [UNREPLIED] src=224.0.0.251 dst=10.223.0.150 sport=5353 dport=5353 packets=0 bytes=0 mark=0 delta-time=17 use=2
+ipv4     2 unknown  2 323 src=10.1.10.93 dst=224.0.0.2 packets=1 bytes=32 [UNREPLIED] src=224.0.0.2 dst=10.1.10.93 packets=0 bytes=0 mark=0 delta-time=276 use=2
+ipv4     2 unknown  2 586 src=10.223.166.69 dst=224.0.0.106 [UNREPLIED] src=224.0.0.106 dst=10.223.166.69 mark=0 use=2
+ipv4     2 tcp      6 8 CLOSE src=10.223.0.150 dst=10.223.166.69 sport=39764 dport=443 packets=12 bytes=1275 src=10.223.166.69 dst=10.223.0.150 sport=443 dport=39764 packets=9 bytes=1365 [ASSURED] mark=0 delta-time=2 use=2
+ipv4     2 tcp      6 7439 ESTABLISHED src=10.223.0.150 dst=10.223.166.69 sport=39784 dport=443 packets=28 bytes=3783 src=10.223.166.69 dst=10.223.0.150 sport=443 dport=39784 packets=24 bytes=3739 [ASSURED] mark=0 delta-time=1 use=2
+ipv4     2 unknown  2 598 src=10.223.0.150 dst=224.0.0.251 [UNREPLIED] src=224.0.0.251 dst=10.223.0.150 mark=0 use=2
+ipv4     2 tcp      6 8 CLOSE src=10.223.0.150 dst=10.223.166.69 sport=39768 dport=443 packets=5 bytes=773 src=10.223.166.69 dst=10.223.0.150 sport=443 dport=39768 packets=3 bytes=260 [ASSURED] mark=0 delta-time=1 use=2

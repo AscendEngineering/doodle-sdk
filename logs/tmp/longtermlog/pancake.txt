@@ -1,0 +1,1 @@
+{ "Temperature": "45", "VIN VOLTAGE": "151" }

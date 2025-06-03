@@ -1,0 +1,4 @@
+
+config general
+	option enabled '0'
+

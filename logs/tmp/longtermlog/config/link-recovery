@@ -1,0 +1,3 @@
+config link_recovery 'general'
+	option recovery_wait_time '15'
+    

@@ -1,0 +1,17 @@
+
+config general
+	option enabled '0'
+	option internet '0'
+	list domains 'google.com'
+	option fall_back '0'
+	option fall_back_time '30'
+	option was_sta_mode '0'
+	option switch_to_ap '0'
+	option use_scan '1'
+	option enable_log '1'
+	option connection_timer '120'
+	option use_static_ip '0'
+	option command '-n simpleconfig -k DoodleSmartRadio -tpc 1 -atpc 1 -c 12 -b 26 -ht40 0 -d 4000 -e true -a client_enabled -nnf DoodleLabsWiFi -knf DoodleSmartRadio -cnf auto -nn 1_to_2 -emv 0 mesh ap_no_fes'
+
+config _dummy
+

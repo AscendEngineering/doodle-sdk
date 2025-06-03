@@ -1,0 +1,26 @@
+
+config system
+	option timezone 'UTC'
+	option ttylogin '0'
+	option urandom_seed '0'
+	option submodel 'RM-915-2KM-XW'
+	option hostname 'smartradio-301a3aa645'
+	option log_file '/var/log/messages'
+	option log_size '500'
+	option pical_reset '0'
+
+config timeserver 'ntp'
+	option enabled '0'
+	option enable_server '0'
+	list server '0.openwrt.pool.ntp.org'
+	list server '1.openwrt.pool.ntp.org'
+	list server '2.openwrt.pool.ntp.org'
+	list server '3.openwrt.pool.ntp.org'
+
+config button
+	option button 'BTN_1'
+	option action 'released'
+	option handler 'firstboot -y && reboot'
+	option min '5'
+	option max '30'
+

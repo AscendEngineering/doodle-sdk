@@ -1,0 +1,5 @@
+
+config ipadvertiser 'general'
+	option port '11111'
+	option enable '1'
+

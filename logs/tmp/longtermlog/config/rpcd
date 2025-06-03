@@ -1,0 +1,25 @@
+
+config rpcd
+	option socket '/var/run/ubus/ubus.sock'
+	option timeout '30'
+
+config login 'main'
+	option username 'root'
+	option password '$p$root'
+	list read '*'
+	list read '!custom_dl_user'
+	list write '*'
+	list write '!custom_dl_user'
+	option rpcjson '0'
+
+config login
+	option username 'user'
+	option password '$1$$qjGr3zrhGAuVJ0BdGtOcW0'
+	option access 'Full Access'
+	option pswd 'DoodleSmartRadio'
+	option rpcjson '1'
+	list write 'unauthenticated'
+	list write 'custom_dl_user'
+	list read 'unauthenticated'
+	list read 'custom_dl_user'
+

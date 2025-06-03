@@ -1,0 +1,11 @@
+Interface wlan0
+	ifindex 10
+	wdev 0x2
+	addr 00:30:1a:3a:a6:45
+	type mesh point
+	wiphy 0
+	channel 12 (915 MHz), width: 26 MHz, center1: 915 MHz
+	txpower 30.00 dBm
+	multicast TXQ:
+		qsz-byt	qsz-pkt	flows	drops	marks	overlmt	hashcol	tx-bytes	tx-packets
+		0	0	597	0	0	0	0	53552		597

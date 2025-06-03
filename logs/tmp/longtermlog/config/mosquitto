@@ -1,0 +1,10 @@
+
+config owrt 'owrt'
+	option use_uci '1'
+
+config mosquitto 'mosquitto'
+	option port '8883'
+	option allow_anonymous '1'
+	option psk_file '/etc/mosquitto/psk_file.key'
+	option psk_hint 'Doodlelabs MQTT'
+
