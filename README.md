@@ -24,7 +24,7 @@ Remove all the build files:
 
 Installing the pip package run:
 ```bash
-pip3 install .
+pip3 install -e .
 ```
 
 # Manually building the package
