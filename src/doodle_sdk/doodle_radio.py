@@ -393,8 +393,6 @@ class Doodle:
         log_location_payload = self._send_command_payload(self._token, "/usr/bin/link-status.sh", ["LOGS"])
         
         response = self._session.post(self._url, json=log_location_payload, verify=False, timeout=10)
-
-        print(response)
         
         if response.status_code != 200:
             response = self._retry(response, log_location_payload, 10)
@@ -403,8 +401,7 @@ class Doodle:
             return None
         
         data = response.json()
-        print(data)
-        
+                
         if 'result' in data and len(data['result']) > 1:
             stdout = data['result'][1].get('stdout', '')
             return stdout.strip()
