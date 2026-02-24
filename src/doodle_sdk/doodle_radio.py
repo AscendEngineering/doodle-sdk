@@ -269,6 +269,29 @@ class Doodle:
         
         return True if response.status_code != 200 else False
 
+    def set_time(self, timestamp: int = None) -> bool:
+        """Set the system time on the doodle radio
+
+        Args:
+            timestamp: Unix epoch timestamp to set. If None, uses the current host time.
+
+        Returns:
+            True if successful, False otherwise
+        """
+        self.check_token()
+
+        if timestamp is None:
+            timestamp = int(time.time())
+
+        set_time_payload = self._send_command_payload(self._token, "date", ["-s", f"@{timestamp}"])
+
+        response = self._session.post(self._url, json=set_time_payload, verify=False, timeout=10)
+
+        if response.status_code != 200:
+            response = self._retry(response, set_time_payload, 10)
+
+        return response.status_code == 200
+
     def get_availible_channel_widths(self):
 
         self.check_token()
@@ -470,7 +493,7 @@ class Doodle:
 
     def check_token(self):
         if not self._token or not self._url:
-            raise TypeError("Must connect to the Doodle before setting its channel")
+            raise TypeError("Must connect to the Doodle")
 
     def _retry(self, response, payload, timeout):
         for retry in range(5):
