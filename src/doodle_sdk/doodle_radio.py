@@ -12,13 +12,14 @@ from . import settings
 
 class Doodle:
 
-    def __init__(self, ip: str = None, user: str = None, password: str = None):
+    def __init__(self, ip: str = None, user: str = None, password: str = None, timeout: int = 10):
         """Creates an instance of the Doodle class
 
         Args:
             ip: IP address of the Doodle
             user: username of the Doodle
             password: password of the Doodle
+            timeout: Timeout in seconds for all HTTP requests (default 10)
 
         Returns:
             Instance of Doodle class
@@ -26,12 +27,13 @@ class Doodle:
         Raises:
             None
         """
-        
+
         self._ip = ip
         self._user = user
         self._password = password
         self._url = None
         self._token = None
+        self._timeout = timeout
 
         # Radio Settings
         self._channel = None
@@ -85,7 +87,7 @@ class Doodle:
 
         for attempt in range(5): # Attempts to connect to the Doodle 5 times
             try:
-                response = self._session.post(self._url, json=login_payload, verify=False)
+                response = self._session.post(self._url, json=login_payload, verify=False, timeout=self._timeout)
                 data = response.json()
 
                 # Extract the token
@@ -101,10 +103,10 @@ class Doodle:
 
         self.check_token()
         assoclist_payload = self._gen_assoclist_payload(self._token)
-        response = self._session.post(self._url, json=assoclist_payload, verify=False, timeout=1)
+        response = self._session.post(self._url, json=assoclist_payload, verify=False, timeout=self._timeout)
         
         if response.status_code != 200:
-            response = self.retry(response, assoclist_payload, 1)
+            response = self._retry(response, assoclist_payload)
         
         stats_response = stats.translate_stat_response(response.json())
         
@@ -125,10 +127,10 @@ class Doodle:
 
         channel_frequency_payload = self._send_command_payload(self._token, "iw", ["wlan0", "info"])
         
-        response = self._session.post(self._url, json=channel_frequency_payload, verify=False, timeout=1)
+        response = self._session.post(self._url, json=channel_frequency_payload, verify=False, timeout=self._timeout)
         
         if response.status_code != 200:
-            response = self._retry(response, channel_frequency_payload, 10)
+            response = self._retry(response, channel_frequency_payload)
         
         if response.status_code != 200:
             return None
@@ -142,7 +144,7 @@ class Doodle:
 
         fes_model_payload = self._send_command_payload(self._token, "fes_model.sh", ["get"])
         
-        response = self._session.post(self._url, json=fes_model_payload, verify=False)
+        response = self._session.post(self._url, json=fes_model_payload, verify=False, timeout=self._timeout)
         data = response.json()
 
         # Process the result
@@ -165,7 +167,7 @@ class Doodle:
 
         board_info_payload = self._gen_board_info_payload(self._token)
 
-        response = self._session.post(self._url, json=board_info_payload, verify=False)
+        response = self._session.post(self._url, json=board_info_payload, verify=False, timeout=self._timeout)
         data = response.json()
 
         if 'result' in data and len(data['result']) > 1:
@@ -197,10 +199,10 @@ class Doodle:
         band_switching_payload = self._send_command_payload(self._token, "/usr/share/simpleconfig/band_switching.sh", 
                                     [target_submodel, str(self._channel), str(self._channel_width)])
         
-        response = self._session.post(self._url, json=band_switching_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=band_switching_payload, verify=False, timeout=self._timeout)
 
         if response.status_code != 200:
-            response = self._retry(response, band_switching_payload, 10)
+            response = self._retry(response, band_switching_payload)
         
         return True if response.status_code != 200 else False
 
@@ -219,10 +221,10 @@ class Doodle:
         band_switching_payload = self._send_command_payload(self._token, "/usr/share/simpleconfig/band_switching.sh", 
                                     [self._submodel, str(ch), str(self._channel_width)])
         
-        response = self._session.post(self._url, json=band_switching_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=band_switching_payload, verify=False, timeout=self._timeout)
 
         if response.status_code != 200:
-            response = self._retry(response, band_switching_payload, 10)
+            response = self._retry(response, band_switching_payload)
         
         return True if response.status_code != 200 else False
 
@@ -232,10 +234,10 @@ class Doodle:
 
         freqlist_payload = self._gen_freqlist_payload(self._token)
 
-        response = self._session.post(self._url, json=freqlist_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=freqlist_payload, verify=False, timeout=self._timeout)
 
         if response.status_code != 200:
-            response = self._retry(response, band_switching_payload, 10)
+            response = self._retry(response, band_switching_payload)
 
         data = response.json()
 
@@ -262,10 +264,10 @@ class Doodle:
         band_switching_payload = self._send_command_payload(self._token, "/usr/share/simpleconfig/band_switching.sh", 
                                     [self._submodel, str(self._channel), str(channel_width)])
         
-        response = self._session.post(self._url, json=band_switching_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=band_switching_payload, verify=False, timeout=self._timeout)
 
         if response.status_code != 200:
-            response = self._retry(response, band_switching_payload, 10)
+            response = self._retry(response, band_switching_payload)
         
         return True if response.status_code != 200 else False
 
@@ -285,10 +287,10 @@ class Doodle:
 
         set_time_payload = self._send_command_payload(self._token, "date", ["-s", f"@{timestamp}"])
 
-        response = self._session.post(self._url, json=set_time_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=set_time_payload, verify=False, timeout=self._timeout)
 
         if response.status_code != 200:
-            response = self._retry(response, set_time_payload, 10)
+            response = self._retry(response, set_time_payload)
 
         return response.status_code == 200
 
@@ -299,10 +301,10 @@ class Doodle:
 
         channel_widths_payload = self._send_command_payload(self._token, "/usr/sbin/info.sh", [])
 
-        response = self._session.post(self._url, json=channel_widths_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=channel_widths_payload, verify=False, timeout=self._timeout)
         
         if response.status_code != 200:
-            response = self._retry(response, channel_widths_payload, 10)
+            response = self._retry(response, channel_widths_payload)
 
         data = response.json()
 
@@ -322,10 +324,10 @@ class Doodle:
 
         get_parent_payload = self._send_command_payload(self._token, "fes_model.sh", ["get", "parent"])
 
-        response = self._session.post(self._url, json=get_parent_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=get_parent_payload, verify=False, timeout=self._timeout)
 
         if response.status_code != 200:
-            response = self._retry(response, get_parent_payload, 10)
+            response = self._retry(response, get_parent_payload)
 
         data = response.json()
 
@@ -345,10 +347,10 @@ class Doodle:
 
         cat_submodel_payload = self._send_command_payload(self._token, "cat", [f"/usr/share/.doodlelabs/fes/{self._parent_model}"])
         
-        response = self._session.post(self._url, json=cat_submodel_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=cat_submodel_payload, verify=False, timeout=self._timeout)
 
         if response.status_code != 200:
-            response = self._retry(response, cat_submodel_payload, 10)
+            response = self._retry(response, cat_submodel_payload)
 
         data = response.json()
 
@@ -387,10 +389,10 @@ class Doodle:
         enable_log_payload = self._send_command_payload(self._token, "uci", 
                                                        ["set", "link_status_log.@general[0].enabled=1"])
         
-        response = self._session.post(self._url, json=enable_log_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=enable_log_payload, verify=False, timeout=self._timeout)
         
         if response.status_code != 200:
-            response = self._retry(response, enable_log_payload, 10)
+            response = self._retry(response, enable_log_payload)
         
         if response.status_code != 200:
             return False
@@ -398,10 +400,10 @@ class Doodle:
         # Commit the changes
         commit_payload = self._send_command_payload(self._token, "uci", ["commit"])
         
-        response = self._session.post(self._url, json=commit_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=commit_payload, verify=False, timeout=self._timeout)
         
         if response.status_code != 200:
-            response = self._retry(response, commit_payload, 10)
+            response = self._retry(response, commit_payload)
         
         return response.status_code == 200
 
@@ -415,10 +417,10 @@ class Doodle:
         
         log_location_payload = self._send_command_payload(self._token, "/usr/bin/link-status.sh", ["LOGS"])
         
-        response = self._session.post(self._url, json=log_location_payload, verify=False, timeout=10)
+        response = self._session.post(self._url, json=log_location_payload, verify=False, timeout=self._timeout)
         
         if response.status_code != 200:
-            response = self._retry(response, log_location_payload, 10)
+            response = self._retry(response, log_location_payload)
         
         if response.status_code != 200:
             return None
@@ -458,10 +460,10 @@ class Doodle:
             }]
         }
         
-        response = self._session.post(self._url, json=read_file_payload, verify=False, timeout=30)
+        response = self._session.post(self._url, json=read_file_payload, verify=False, timeout=self._timeout)
         
         if response.status_code != 200:
-            response = self._retry(response, read_file_payload, 30)
+            response = self._retry(response, read_file_payload)
         
         if response.status_code != 200:
             return None
@@ -495,12 +497,12 @@ class Doodle:
         if not self._token or not self._url:
             raise TypeError("Must connect to the Doodle")
 
-    def _retry(self, response, payload, timeout):
+    def _retry(self, response, payload):
         for retry in range(5):
             self.connect()
-            response = self._session.post(self._url, json=payload, verify=False, timeout=timeout)
+            response = self._session.post(self._url, json=payload, verify=False, timeout=self._timeout)
 
-            if (response.status == 200):
+            if (response.status_code == 200):
                 break
 
             time.sleep(1)
