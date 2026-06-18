@@ -14,6 +14,7 @@ setup(
     packages=find_packages(where='src'),
     install_requires=[
         "requests>=2.0.0",  # Add your dependencies here
+        "psutil>=5.0.0",
     ],
     extras_require={
         "dev": [

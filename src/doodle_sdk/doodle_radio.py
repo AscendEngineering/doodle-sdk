@@ -8,6 +8,7 @@ import os
 from typing import Dict
 from . import stats
 from . import settings
+from . import discovery
 
 
 class Doodle:
@@ -95,7 +96,43 @@ class Doodle:
                 pass
 
         return False
-        
+
+    def auto_connect(self, user: str = None, password: str = None, retry_interval: int = 5) -> bool:
+        """Discover the connected Doodle radio and connect to it automatically.
+
+        Finds the local interface with an IP in the 10.223.0.0/16 subnet,
+        derives the radio's management IP from that interface's MAC address, and
+        confirms reachability by performing a JSON-RPC login. Retries on the
+        given interval until a matching interface is found and login succeeds.
+
+        Args:
+            user: username of the Doodle (defaults applied by connect())
+            password: password of the Doodle (defaults applied by connect())
+            retry_interval: seconds to wait between attempts (default 5)
+
+        Returns:
+            True once connected. The confirmed radio IP and session token are
+            stored on the instance (self._ip / self._token) for sdk use.
+        """
+        while True:
+            radio_ip = discovery.discover_radio_ip()
+
+            if radio_ip is None:
+                warnings.warn(
+                    "No interface found in the 10.223.0.0/16 subnet; "
+                    f"retrying in {retry_interval}s"
+                )
+                time.sleep(retry_interval)
+                continue
+
+            if self.connect(ip=radio_ip, user=user, password=password):
+                return True
+
+            warnings.warn(
+                f"Found radio at {radio_ip} but login failed; "
+                f"retrying in {retry_interval}s"
+            )
+            time.sleep(retry_interval)
 
     def get_associated_list(self):
 
